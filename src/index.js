@@ -26,20 +26,19 @@ function onInputSearch(e) {
         } else if (countryArr.length >= 2 && countryArr.length <= 10) {
           clearMarkup();
           countryList.innerHTML = renderCountryListMarkup(countryArr);
-        } else if (
-          countryName === 'Russia' ||
-          countryName === 'Russian' ||
-          countryName === 'russia' ||
-          countryName === 'Russian Federation' ||
-          countryName === 'russian' ||
-          countryName === 'Russi' ||
-          countryName === 'russi') {
-          Notify.warning('Russia is a terrorist state! Forget about this country and support Ukraine!', notifyOpts);
-          e.target.value = '';
-          clearMarkup();
-        } else {
-          clearMarkup();
-          countryInfo.innerHTML = renderSelectedCountry(countryArr);
+        } else if (countryArr.length === 1) {
+          const [currentCountry] = countryArr;
+          const { fifa: code } = currentCountry
+          
+          if (code.toLowerCase() === 'rus') {
+            Notify.warning(
+              'Russia is a terrorist state! Forget about this country and support Ukraine!', notifyOpts);
+            e.target.value = '';
+            clearMarkup();
+          } else {
+            clearMarkup();
+            countryInfo.innerHTML = renderSelectedCountry(countryArr);
+          }
         }
       })
       .catch(() => {
